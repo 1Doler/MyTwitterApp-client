@@ -5,10 +5,7 @@ export const fetchPosts = createAsyncThunk(
   "posts/FetchPosts",
   async (params) => {
     const { data } = await axios.get(
-      `/posts/?sort=${params.sort}${params?.tag ? "&tags=" + params.tag : ""}`,
-      {
-        withCredentials: true,
-      }
+      `/posts/?sort=${params.sort}${params?.tag ? "&tags=" + params.tag : ""}`
     );
     return data;
   }
@@ -20,9 +17,7 @@ export const fetchTags = createAsyncThunk("posts/FetchTags", async () => {
 export const fetchRemovePost = createAsyncThunk(
   "posts/FetchRemovePost",
   async (id) => {
-    const { data } = await axios.delete("/posts/" + id, {
-      withCredentials: true,
-    });
+    const { data } = await axios.delete("/posts/" + id);
     console.log(data);
     return data;
   }
