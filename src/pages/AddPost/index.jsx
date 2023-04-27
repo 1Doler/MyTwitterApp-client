@@ -147,7 +147,7 @@ export const AddPost = ({ isEdit = false }) => {
           </Button>
           <img
             className={styles.image}
-            src={process.env.REACT_APP_API_URL + `${imageUrl}`}
+            src={process.env.REACT_APP_API_URL + `${imageUrl.slice(1)}`}
             alt="Uploaded"
           />
         </>

@@ -4,18 +4,14 @@ import axios from "../../axios";
 export const fetchUserData = createAsyncThunk(
   "auth/fetchUserData",
   async (params) => {
-    const { data } = await axios.post("/auth/login", params, {
-      withCredentials: true,
-    });
+    const { data } = await axios.post("/auth/login", params);
     return data;
   }
 );
 export const fetchRegister = createAsyncThunk(
   "auth/fetchRegister",
   async (params) => {
-    const { data } = await axios.post("/auth/register", params, {
-      withCredentials: true,
-    });
+    const { data } = await axios.post("/auth/register", params);
     console.log(data);
     return data;
   }
@@ -23,9 +19,7 @@ export const fetchRegister = createAsyncThunk(
 export const fetchUserDataMe = createAsyncThunk(
   "auth/fetchUserData",
   async () => {
-    const { data } = await axios.get("/auth/getprofile", {
-      withCredentials: true,
-    });
+    const { data } = await axios.get("/auth/getprofile");
     return data;
   }
 );
