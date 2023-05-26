@@ -56,7 +56,7 @@ export const Post = ({
         <img
           className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
           src={
-            "https://blog-back-production-2b18.up.railway.app" +
+            "https://blog-back-production-2b18.up.railway.app/" +
             imageUrl.slice(1)
           }
           alt={title}
