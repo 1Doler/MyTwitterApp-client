@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: "https://blog-back-production-2b18.up.railway.app/",
+  withCredentials: true,
 });
 
-axios.defaults.withCredentials = true;
 export default instance;
