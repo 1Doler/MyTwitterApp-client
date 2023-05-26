@@ -49,7 +49,9 @@ export const AddPost = ({ isEdit = false }) => {
       const formData = new FormData();
       const file = event.target.files[0];
       formData.append("image", file);
-      const { data } = await axios.post("/upload", formData);
+      const { data } = await axios.post("/upload", formData, {
+        withCredentials: true,
+      });
       setImageUrl(data.url);
     } catch (error) {
       console.log(error);
@@ -79,7 +81,9 @@ export const AddPost = ({ isEdit = false }) => {
       if (id) {
         await axios.patch(`/posts/${id}`, fields);
       } else {
-        const { data } = await axios.post("/posts", fields);
+        const { data } = await axios.post("/posts", fields, {
+          withCredentials: true,
+        });
         postId = data._id;
       }
       navigate(`/posts/${id ? id : postId}`);
