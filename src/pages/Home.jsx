@@ -9,17 +9,21 @@ import { TagsBlock } from "../components/TagsBlock";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { fetchPosts, fetchTags } from "../redux/slices/posts";
 
+import { CSSTransition } from "react-transition-group";
+import "./styles.scss";
+
 export const Home = () => {
   const dispatch = useDispatch();
 
   const [typeSort, setTypeSort] = useState("new");
   const [changeTag, setChangeTag] = useState(null);
+  const [statusLoad, setStatusLoad] = useState("loading");
 
   const { posts, tags } = useSelector((state) => state.posts);
   const { data } = useSelector((state) => state.auth);
 
-  const isPostsLoading = !!posts.status === "Loading";
-  const isTagsLoading = tags.status === "Loading";
+  const isPostsLoading = !!posts.status === "loading";
+  const isTagsLoading = tags.status === "loading";
   useEffect(() => {
     dispatch(fetchPosts({ sort: typeSort, tag: changeTag }));
     dispatch(fetchTags());
@@ -34,7 +38,18 @@ export const Home = () => {
       >
         <Tab label="Новые" onClick={() => setTypeSort("new")} />
         <Tab label="Популярные" onClick={() => setTypeSort("popular")} />
+        <CSSTransition
+          in={!!changeTag}
+          timeout={700}
+          unmountOnExit
+          classNames="alert"
+        >
+          <h2 className="selectedTag">
+            #{changeTag} <span onClick={() => setChangeTag(null)}>X</span>
+          </h2>
+        </CSSTransition>
       </Tabs>
+
       <Grid container spacing={4}>
         <Grid xs={8} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
@@ -81,7 +96,7 @@ export const Home = () => {
             onChange={(name) => setChangeTag(name)}
             isLoading={isTagsLoading}
           />
-          <CommentsBlock
+          {/* <CommentsBlock
             items={[
               {
                 user: {
@@ -99,7 +114,7 @@ export const Home = () => {
               },
             ]}
             isLoading={false}
-          />
+          /> */}
         </Grid>
       </Grid>
     </>
