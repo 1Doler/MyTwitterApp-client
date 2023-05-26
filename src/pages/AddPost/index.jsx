@@ -79,7 +79,9 @@ export const AddPost = ({ isEdit = false }) => {
       }
       let postId = null;
       if (id) {
-        await axios.patch(`/posts/${id}`, fields);
+        await axios.patch(`/posts/${id}`, fields, {
+          withCredentials: true,
+        });
       } else {
         const { data } = await axios.post("/posts", fields, {
           withCredentials: true,
