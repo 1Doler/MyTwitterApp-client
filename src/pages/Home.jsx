@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Grid from "@mui/material/Grid";
+import { motion } from "framer-motion";
 
 import { Post } from "../components/Post";
 import { TagsBlock } from "../components/TagsBlock";
 import { CommentsBlock } from "../components/CommentsBlock";
+
 import { fetchPosts, fetchTags } from "../redux/slices/posts";
+import { fetchComment } from "../redux/slices/comment";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -15,18 +19,24 @@ export const Home = () => {
   const [typeSort, setTypeSort] = useState("new");
   const [changeTag, setChangeTag] = useState(null);
 
-  const { posts, tags } = useSelector((state) => state.posts);
-  const { data } = useSelector((state) => state.auth);
+  const { posts, tags } = useSelector(state => state.posts);
+  const { data } = useSelector(state => state.auth);
+  const { comments } = useSelector(state => state.comments);
 
   const isPostsLoading = !!posts.status === "Loading";
   const isTagsLoading = tags.status === "Loading";
   useEffect(() => {
     dispatch(fetchPosts({ sort: typeSort, tag: changeTag }));
+    dispatch(fetchComment());
     dispatch(fetchTags());
   }, [typeSort, changeTag]);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <Tabs
         style={{ marginBottom: 15 }}
         value={typeSort === "new" ? 0 : 1}
@@ -56,52 +66,43 @@ export const Home = () => {
                 isEditable
               />
             ) : (
-              <Post
-                _id={obj._id}
-                title={obj.title}
-                imageUrl={obj?.imageUrl || null}
-                user={{
-                  avatarUrl: obj.user.avatarUrl,
-                  fullName: obj.user.fullName,
-                }}
-                createdAt={obj.createdAt}
-                viewsCount={obj.viewsCount}
-                commentsCount={obj?.commentsCount || 0}
-                tags={obj.tags}
-                isLoading={false}
-                isEditable={obj.user._id === data?.userData._id}
-                dispatch={dispatch}
-              />
+              <motion.div
+                key={obj._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Post
+                  key={obj._id}
+                  _id={obj._id}
+                  title={obj.title}
+                  imageUrl={obj?.imageUrl || null}
+                  user={{
+                    avatarUrl: obj.user.avatarUrl,
+                    fullName: obj.user.fullName,
+                  }}
+                  createdAt={obj.createdAt}
+                  viewsCount={obj.viewsCount}
+                  commentsCount={obj?.commentsCount || 0}
+                  tags={obj.tags}
+                  isLoading={false}
+                  isEditable={obj.user._id === data?.userData._id}
+                  dispatch={dispatch}
+                />
+              </motion.div>
             )
           )}
         </Grid>
         <Grid xs={4} item>
           <TagsBlock
             items={tags.items}
-            onChange={(name) => setChangeTag(name)}
+            onChange={name => setChangeTag(name)}
             isLoading={isTagsLoading}
           />
-          <CommentsBlock
-            items={[
-              {
-                user: {
-                  fullName: "Вася Пупкин",
-                  avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
-                },
-                text: "Это тестовый комментарий",
-              },
-              {
-                user: {
-                  fullName: "Иван Иванов",
-                  avatarUrl: "https://mui.com/static/images/avatar/2.jpg",
-                },
-                text: "When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top",
-              },
-            ]}
-            isLoading={false}
-          />
+          <CommentsBlock items={comments.items} isLoading={false} />
         </Grid>
       </Grid>
-    </>
+    </motion.div>
   );
 };

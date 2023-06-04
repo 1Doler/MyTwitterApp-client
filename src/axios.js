@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://blog-back-production-2b18.up.railway.app/",
-  withCredentials: true,
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 export default instance;

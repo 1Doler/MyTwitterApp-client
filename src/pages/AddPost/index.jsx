@@ -44,7 +44,7 @@ export const AddPost = ({ isEdit = false }) => {
       console.log(error);
     }
   };
-  const handleChangeFile = async (event) => {
+  const handleChangeFile = async event => {
     try {
       const formData = new FormData();
       const file = event.target.files[0];
@@ -62,7 +62,7 @@ export const AddPost = ({ isEdit = false }) => {
     setImageUrl("");
   };
 
-  const onChange = React.useCallback((value) => {
+  const onChange = React.useCallback(value => {
     setValue(value);
   }, []);
 
@@ -73,7 +73,6 @@ export const AddPost = ({ isEdit = false }) => {
         title,
         tags: tags.split(" ").flat(),
       };
-      console.log(fields.tags);
       if (imageUrl) {
         fields.imageUrl = `${imageUrl}`;
       }
@@ -122,7 +121,7 @@ export const AddPost = ({ isEdit = false }) => {
     return <PostSkeleton />;
   }
   return (
-    <Paper style={{ padding: 30 }}>
+    <Paper style={{ padding: 30 }} elevation={1}>
       <Button
         onClick={() => inputFileRef.current.click()}
         variant="outlined"
@@ -147,9 +146,7 @@ export const AddPost = ({ isEdit = false }) => {
           </Button>
           <img
             className={styles.image}
-            src={`https://blog-back-production-2b18.up.railway.app/${imageUrl.slice(
-              1
-            )}`}
+            src={process.env.REACT_APP_API_URL + imageUrl.slice(1)}
             alt="Uploaded"
           />
         </>
@@ -163,7 +160,7 @@ export const AddPost = ({ isEdit = false }) => {
         placeholder="Заголовок статьи..."
         fullWidth
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={e => setTitle(e.target.value)}
       />
       <TextField
         classes={{ root: styles.tags }}
@@ -171,7 +168,7 @@ export const AddPost = ({ isEdit = false }) => {
         placeholder="Тэги"
         fullWidth
         value={tags}
-        onChange={(e) => setTags(e.target.value)}
+        onChange={e => setTags(e.target.value)}
       />
       <SimpleMDE
         className={styles.editor}

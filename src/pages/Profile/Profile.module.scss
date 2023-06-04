@@ -1,0 +1,37 @@
+.root {
+  width: 400px;
+  padding: 50px;
+  border: 1px solid #dedede;
+  margin: 50px auto;
+}
+
+.field {
+  margin-bottom: 20px !important;
+}
+
+.title {
+  text-align: center !important;
+  font-weight: bold !important;
+  margin-bottom: 30px !important;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.img {
+  height: 120px;
+  border-radius: 30px;
+  margin-right: 10px;
+}
+
+.wrapper {
+  display: grid;
+  justify-items: center;
+}
+
+.uploadImg {
+  margin-bottom: 20px;
+}

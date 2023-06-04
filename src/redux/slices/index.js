@@ -1,4 +1,5 @@
 import { postsReducer } from "./posts";
 import { authReducer } from "./auth";
+import { commentsReducer } from "./comment";
 
-export { postsReducer, authReducer };
+export { postsReducer, authReducer, commentsReducer };

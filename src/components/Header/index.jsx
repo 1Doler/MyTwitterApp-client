@@ -11,7 +11,6 @@ export const Header = () => {
   const dispatch = useDispatch();
   const onClickLogout = () => {
     dispatch(logout());
-    console.log(document.cookie);
 
     document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
   };
@@ -28,6 +27,9 @@ export const Header = () => {
               <>
                 <Link to="/add-post">
                   <Button variant="contained">Написать статью</Button>
+                </Link>
+                <Link to="/profile">
+                  <Button variant="contained">Профиль</Button>
                 </Link>
                 <Button
                   onClick={onClickLogout}

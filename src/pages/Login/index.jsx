@@ -25,7 +25,7 @@ export const Login = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
 
-  const onSubmit = async (values) => {
+  const onSubmit = async values => {
     await dispatch(fetchUserData(values));
   };
 
@@ -34,7 +34,7 @@ export const Login = () => {
   }
 
   return (
-    <Paper classes={{ root: styles.root }}>
+    <Paper classes={{ root: styles.root }} elevation={1}>
       <Typography classes={{ root: styles.title }} variant="h5">
         Вход в аккаунт
       </Typography>
