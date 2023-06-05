@@ -11,6 +11,7 @@ import styles from "./AddPost.module.scss";
 import { selectIsAuth } from "../../redux/slices/auth";
 import { Navigate, useParams } from "react-router-dom";
 import { PostSkeleton } from "../../components/Post/Skeleton";
+import { ModalBlock } from "../../components/Modal/ModalBlock";
 
 export const AddPost = ({ isEdit = false }) => {
   const isAuth = useSelector(selectIsAuth);
@@ -22,6 +23,8 @@ export const AddPost = ({ isEdit = false }) => {
   const [value, setValue] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState(null);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -90,6 +93,7 @@ export const AddPost = ({ isEdit = false }) => {
       navigate(`/posts/${id ? id : postId}`);
     } catch (error) {
       console.log(error);
+      setErrorMessage(error.response.data);
     } finally {
       setIsLoading(false);
     }
@@ -175,6 +179,7 @@ export const AddPost = ({ isEdit = false }) => {
         value={value}
         onChange={onChange}
         options={options}
+        style={{ marginBottom: 0 }}
       />
       <div className={styles.buttons}>
         <Button onClick={onSubmit} size="large" variant="contained">
@@ -186,6 +191,19 @@ export const AddPost = ({ isEdit = false }) => {
           </Button>
         </a>
       </div>
+      <ModalBlock
+        title={"Поля заполнены некорректно"}
+        open={errorMessage ? true : false}
+        onClose={() => setErrorMessage(null)}
+      >
+        <div>
+          <ul>
+            {errorMessage?.map(mes => (
+              <li key={mes.msg}>{mes.msg}</li>
+            ))}
+          </ul>
+        </div>
+      </ModalBlock>
     </Paper>
   );
 };

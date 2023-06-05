@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useParams } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Grid from "@mui/material/Grid";
@@ -12,31 +12,36 @@ import { CommentsBlock } from "../components/CommentsBlock";
 
 import { fetchPosts, fetchTags } from "../redux/slices/posts";
 import { fetchComment } from "../redux/slices/comment";
+import { HomeSkeleton } from "../components/HomeSkeleton/HomeSkeleton";
 
 export const Home = () => {
   const dispatch = useDispatch();
 
   const [typeSort, setTypeSort] = useState("new");
   const [changeTag, setChangeTag] = useState(null);
-
+  const { id } = useParams();
+  console.log(id);
   const { posts, tags } = useSelector(state => state.posts);
   const { data } = useSelector(state => state.auth);
   const { comments } = useSelector(state => state.comments);
-
   const isPostsLoading = !!posts.status === "Loading";
   const isTagsLoading = tags.status === "Loading";
   useEffect(() => {
-    dispatch(fetchPosts({ sort: typeSort, tag: changeTag }));
+    dispatch(fetchPosts({ sort: typeSort, tag: id }));
     dispatch(fetchComment());
     dispatch(fetchTags());
-  }, [typeSort, changeTag]);
+  }, [typeSort, id]);
 
+  if (posts.status === "loading") {
+    return <HomeSkeleton />;
+  }
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      {id && <h1># {id}</h1>}
       <Tabs
         style={{ marginBottom: 15 }}
         value={typeSort === "new" ? 0 : 1}
@@ -87,7 +92,7 @@ export const Home = () => {
                   commentsCount={obj?.commentsCount || 0}
                   tags={obj.tags}
                   isLoading={false}
-                  isEditable={obj.user._id === data?.userData._id}
+                  isEditable={obj.user._id === data?.userData?._id}
                   dispatch={dispatch}
                 />
               </motion.div>

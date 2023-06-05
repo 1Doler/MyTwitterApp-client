@@ -33,7 +33,7 @@ export const Index = ({ postId, userId, avatarUrl }) => {
       <div className={styles.root}>
         <Avatar
           classes={{ root: styles.avatar }}
-          src={process.env.REACT_APP_API_URL + avatarUrl.slice(1)}
+          src={process.env.REACT_APP_API_URL + avatarUrl?.slice(1)}
         />
         <div className={styles.form}>
           <TextField

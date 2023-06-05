@@ -20,6 +20,7 @@ function App() {
       <Container maxWidth="lg">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/tag/:id" element={<Home />} />
           <Route path="/posts/:id" element={<FullPost />} />
           <Route path="/posts/:id/edit" element={<AddPost isEdit={true} />} />
           <Route path="/add-post" element={<AddPost />} />

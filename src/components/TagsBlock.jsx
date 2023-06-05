@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -15,9 +15,9 @@ export const TagsBlock = ({ items, isLoading = true, onChange }) => {
     <SideBlock title="Тэги">
       <List>
         {(isLoading ? [...Array(5)] : items).map((name, i) => (
-          <div
+          <Link
+            to={`/tag/${name}`}
             style={{ textDecoration: "none", color: "black" }}
-            onClick={() => onChange(name)}
             key={i}
           >
             <ListItem key={i} disablePadding>
@@ -32,7 +32,7 @@ export const TagsBlock = ({ items, isLoading = true, onChange }) => {
                 )}
               </ListItemButton>
             </ListItem>
-          </div>
+          </Link>
         ))}
       </List>
     </SideBlock>

@@ -1,0 +1,34 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  gap: 5px;
+  .post {
+    padding: 20px;
+    background-color: rgb(221, 221, 221);
+    display: grid;
+    .user {
+      background-color: rgb(221, 221, 221);
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+  }
+  .right {
+    .tags {
+      padding: 20px;
+      background-color: rgb(221, 221, 221);
+      padding: 20px;
+    }
+    .comments {
+      .comment {
+        padding: 20px;
+        background-color: rgb(221, 221, 221);
+        .user {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "../../axios";
 
 import { useForm } from "react-hook-form";
-
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUpdateProfile } from "../../redux/slices/auth";
 
 import Typography from "@mui/material/Typography";
@@ -14,13 +14,17 @@ import Avatar from "@mui/material/Avatar";
 
 import styles from "./Profile.module.scss";
 
-export const Profile = ({ user }) => {
+export const Profile = () => {
   const inputFileRef = useRef(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [imageUrl, setImageUrl] = useState("");
 
+  const { data, status } = useSelector(state => state.auth);
+  console.log(status);
+  const user = data?.userData;
   const {
     register,
     setValue,
@@ -56,18 +60,23 @@ export const Profile = ({ user }) => {
 
   const onSubmitUpdate = async value => {
     try {
-      const res = await dispatch(
-        fetchUpdateProfile({
-          userId: user._id,
-          fullName: value.fullName,
-          avatarUrl: imageUrl,
-        })
-      );
-      console.log(res);
+      const body = {
+        userId: user._id,
+        fullName: value.fullName,
+      };
+      if (imageUrl) {
+        body.avatarUrl = imageUrl;
+      }
+      await dispatch(fetchUpdateProfile(body));
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (!user) {
+    return <h1>Loading</h1>;
+  }
 
   return (
     <Paper
@@ -108,7 +117,7 @@ export const Profile = ({ user }) => {
         onChange={handleChangeFile}
         hidden
       />
-      <form onSubmit={handleSubmit(onSubmitUpdate)}>
+      <form onSubmit={handleSubmit(onSubmitUpdate)} className={styles.form}>
         <TextField
           InputLabelProps={{ shrink: true }}
           className={styles.field}

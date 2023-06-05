@@ -21,7 +21,6 @@ export const fetchAddCommentPost = createAsyncThunk(
     const { data } = await axios.post(`/comment/${params.postId}`, {
       ...params,
     });
-    console.log(data);
     return data;
   }
 );
