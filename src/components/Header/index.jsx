@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./Header.module.scss";
 import Container from "@mui/material/Container";
 import { selectIsAuth, logout } from "../../redux/slices/auth";
+import axios from "../../axios";
 
 export const Header = () => {
   const isAuth = useSelector(selectIsAuth);
   const dispatch = useDispatch();
-  const onClickLogout = () => {
+  const onClickLogout = async () => {
     dispatch(logout());
-
-    document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    await axios.get(`/auth/logout`);
   };
 
   return (
