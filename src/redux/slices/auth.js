@@ -1,21 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
-const config = {
-  headers: {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  },
-};
 export const fetchUserData = createAsyncThunk(
   "auth/fetchUserData",
   async params => {
-    const { data } = await axios.post(
-      "/auth/login",
-      params,
-      { withCredentials: true },
-      config
-    );
+    const { data } = await axios.post("/auth/login", params, {
+      withCredentials: true,
+    });
     return data;
   }
 );
