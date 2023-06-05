@@ -12,7 +12,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const onClickLogout = async () => {
     dispatch(logout());
-    await axios.get(`/auth/logout`);
+    await axios.get(`/auth/logout`, { withCredentials: true });
   };
 
   return (

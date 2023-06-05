@@ -23,7 +23,6 @@ export const Profile = () => {
   const [imageUrl, setImageUrl] = useState("");
 
   const { data, status } = useSelector(state => state.auth);
-  console.log(status);
   const user = data?.userData;
   const {
     register,

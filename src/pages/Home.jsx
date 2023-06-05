@@ -20,7 +20,6 @@ export const Home = () => {
   const [typeSort, setTypeSort] = useState("new");
   const [changeTag, setChangeTag] = useState(null);
   const { id } = useParams();
-  console.log(id);
   const { posts, tags } = useSelector(state => state.posts);
   const { data } = useSelector(state => state.auth);
   const { comments } = useSelector(state => state.comments);
