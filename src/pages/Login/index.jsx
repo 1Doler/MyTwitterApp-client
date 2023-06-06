@@ -17,15 +17,15 @@ export const Login = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      email: "doler@gmail.com",
-      password: "pas123",
+      email: "",
+      password: "",
     },
     mode: "onChange",
   });
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
 
-  const onSubmit = async (values) => {
+  const onSubmit = async values => {
     await dispatch(fetchUserData(values));
   };
 
@@ -34,7 +34,7 @@ export const Login = () => {
   }
 
   return (
-    <Paper classes={{ root: styles.root }}>
+    <Paper classes={{ root: styles.root }} elevation={1}>
       <Typography classes={{ root: styles.title }} variant="h5">
         Вход в аккаунт
       </Typography>

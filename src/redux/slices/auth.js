@@ -3,7 +3,7 @@ import axios from "../../axios";
 
 export const fetchUserData = createAsyncThunk(
   "auth/fetchUserData",
-  async (params) => {
+  async params => {
     const { data } = await axios.post("/auth/login", params, {
       withCredentials: true,
     });
@@ -12,11 +12,8 @@ export const fetchUserData = createAsyncThunk(
 );
 export const fetchRegister = createAsyncThunk(
   "auth/fetchRegister",
-  async (params) => {
-    const { data } = await axios.post("/auth/register", params, {
-      withCredentials: true,
-    });
-    console.log(data);
+  async params => {
+    const { data } = await axios.post("/auth/register", params);
     return data;
   }
 );
@@ -24,6 +21,15 @@ export const fetchUserDataMe = createAsyncThunk(
   "auth/fetchUserData",
   async () => {
     const { data } = await axios.get("/auth/getprofile", {
+      withCredentials: true,
+    });
+    return data;
+  }
+);
+export const fetchUpdateProfile = createAsyncThunk(
+  "fetchUpdateProfile",
+  async userData => {
+    const { data } = await axios.patch("/auth/update", userData, {
       withCredentials: true,
     });
     return data;
@@ -39,12 +45,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
+    logout: state => {
       state.data = null;
     },
   },
   extraReducers: {
-    [fetchUserData.pending]: (state) => {
+    [fetchUserData.pending]: state => {
       state.data = null;
       state.status = "loading";
     },
@@ -52,11 +58,11 @@ const authSlice = createSlice({
       state.data = action.payload;
       state.status = "loaded";
     },
-    [fetchUserData.error]: (state) => {
+    [fetchUserData.error]: state => {
       state.data = null;
       state.status = "error";
     },
-    [fetchUserDataMe.pending]: (state) => {
+    [fetchUserDataMe.pending]: state => {
       state.data = null;
       state.status = "loading";
     },
@@ -64,11 +70,11 @@ const authSlice = createSlice({
       state.data = action.payload;
       state.status = "loaded";
     },
-    [fetchUserDataMe.error]: (state) => {
+    [fetchUserDataMe.error]: state => {
       state.data = null;
       state.status = "error";
     },
-    [fetchRegister.pending]: (state) => {
+    [fetchRegister.pending]: state => {
       state.data = null;
       state.status = "loading";
     },
@@ -76,13 +82,23 @@ const authSlice = createSlice({
       state.data = action.payload;
       state.status = "loaded";
     },
-    [fetchRegister.error]: (state) => {
+    [fetchRegister.error]: state => {
       state.data = null;
+      state.status = "error";
+    },
+    [fetchUpdateProfile.pending]: state => {
+      state.status = "loading";
+    },
+    [fetchUpdateProfile.fulfilled]: (state, action) => {
+      state.data = action.payload;
+      state.status = "loaded";
+    },
+    [fetchUpdateProfile.error]: state => {
       state.status = "error";
     },
   },
 });
 
-export const selectIsAuth = (state) => !!state.auth.data;
+export const selectIsAuth = state => !!state.auth.data;
 export const authReducer = authSlice.reducer;
 export const { logout } = authSlice.actions;

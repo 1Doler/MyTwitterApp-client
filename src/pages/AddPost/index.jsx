@@ -11,6 +11,7 @@ import styles from "./AddPost.module.scss";
 import { selectIsAuth } from "../../redux/slices/auth";
 import { Navigate, useParams } from "react-router-dom";
 import { PostSkeleton } from "../../components/Post/Skeleton";
+import { ModalBlock } from "../../components/Modal/ModalBlock";
 
 export const AddPost = ({ isEdit = false }) => {
   const isAuth = useSelector(selectIsAuth);
@@ -22,6 +23,8 @@ export const AddPost = ({ isEdit = false }) => {
   const [value, setValue] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState(null);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -44,7 +47,7 @@ export const AddPost = ({ isEdit = false }) => {
       console.log(error);
     }
   };
-  const handleChangeFile = async (event) => {
+  const handleChangeFile = async event => {
     try {
       const formData = new FormData();
       const file = event.target.files[0];
@@ -62,7 +65,7 @@ export const AddPost = ({ isEdit = false }) => {
     setImageUrl("");
   };
 
-  const onChange = React.useCallback((value) => {
+  const onChange = React.useCallback(value => {
     setValue(value);
   }, []);
 
@@ -73,7 +76,6 @@ export const AddPost = ({ isEdit = false }) => {
         title,
         tags: tags.split(" ").flat(),
       };
-      console.log(fields.tags);
       if (imageUrl) {
         fields.imageUrl = `${imageUrl}`;
       }
@@ -91,6 +93,7 @@ export const AddPost = ({ isEdit = false }) => {
       navigate(`/posts/${id ? id : postId}`);
     } catch (error) {
       console.log(error);
+      setErrorMessage(error.response.data);
     } finally {
       setIsLoading(false);
     }
@@ -122,7 +125,7 @@ export const AddPost = ({ isEdit = false }) => {
     return <PostSkeleton />;
   }
   return (
-    <Paper style={{ padding: 30 }}>
+    <Paper style={{ padding: 30 }} elevation={1}>
       <Button
         onClick={() => inputFileRef.current.click()}
         variant="outlined"
@@ -147,7 +150,7 @@ export const AddPost = ({ isEdit = false }) => {
           </Button>
           <img
             className={styles.image}
-            src={`http://localhost:4444${imageUrl}`}
+            src={process.env.REACT_APP_API_URL + imageUrl.slice(1)}
             alt="Uploaded"
           />
         </>
@@ -161,7 +164,7 @@ export const AddPost = ({ isEdit = false }) => {
         placeholder="Заголовок статьи..."
         fullWidth
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={e => setTitle(e.target.value)}
       />
       <TextField
         classes={{ root: styles.tags }}
@@ -169,13 +172,14 @@ export const AddPost = ({ isEdit = false }) => {
         placeholder="Тэги"
         fullWidth
         value={tags}
-        onChange={(e) => setTags(e.target.value)}
+        onChange={e => setTags(e.target.value)}
       />
       <SimpleMDE
         className={styles.editor}
         value={value}
         onChange={onChange}
         options={options}
+        style={{ marginBottom: 0 }}
       />
       <div className={styles.buttons}>
         <Button onClick={onSubmit} size="large" variant="contained">
@@ -187,6 +191,19 @@ export const AddPost = ({ isEdit = false }) => {
           </Button>
         </a>
       </div>
+      <ModalBlock
+        title={"Поля заполнены некорректно"}
+        open={errorMessage ? true : false}
+        onClose={() => setErrorMessage(null)}
+      >
+        <div>
+          <ul>
+            {errorMessage?.map(mes => (
+              <li key={mes.msg}>{mes.msg}</li>
+            ))}
+          </ul>
+        </div>
+      </ModalBlock>
     </Paper>
   );
 };

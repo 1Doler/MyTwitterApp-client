@@ -26,14 +26,14 @@ export const Registration = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
 
-  const onSubmitRegister = async (values) => {
+  const onSubmitRegister = async values => {
     await dispatch(fetchRegister(values));
   };
   if (isAuth) {
     return <Navigate to="/" />;
   }
   return (
-    <Paper classes={{ root: styles.root }}>
+    <Paper classes={{ root: styles.root }} elevation={1}>
       <Typography classes={{ root: styles.title }} variant="h5">
         Создание аккаунта
       </Typography>

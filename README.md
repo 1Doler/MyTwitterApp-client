@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# MyTwitterApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+MyTwitterApp - это веб-приложение, которое позволяет пользователям публиковать короткие сообщения, известные как "твиты", и делиться ими с другими пользователями.
 
-## Available Scripts
+## Основные функции:
 
-In the project directory, you can run:
+Регистрация и аутентификация:
 
-### `npm start`
+- Пользователи могут зарегистрироваться, создавая учетную запись с именем пользователя, электронной почтой и паролем.
+- Аутентифицированные пользователи могут войти в систему, используя свои учетные данные.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Профиль пользователя:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Пользователи могут настроить свой профиль, загрузив аватар и предоставив дополнительную информацию о себе.
+- Профиль пользователя отображает информацию о пользователе, его твитах и подписчиках/подписках.
 
-### `npm test`
+Создание и публикация твитов:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Аутентифицированные пользователи могут создавать и публиковать свои твиты.
+- Пользователи могут добавлять хэштеги к своим твитам для лучшей категоризации и поиска.
 
-### `npm run build`
+Просмотр твитов:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Пользователи могут просматривать твиты, опубликованные другими пользователями.
+- Твиты могут быть отсортированы по различным критериям, таким как популярность и новизна.
+- Пользователи могут оставлять комментарии к твитам других пользователей.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Редактирование твитов:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Аутентифицированные пользователи могут редактировать свои ранее опубликованные твиты.
+- Пользователи могут изменять текст твита, добавлять или удалять хэштеги.
+- Редактирование твита должно быть доступно только для автора твита.
 
-### `npm run eject`
+## Использованные технологии:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Front-end:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- HTML и Scss: для разметки и стилизации веб-страниц.
+- JavaScript: для создания интерактивных элементов и взаимодействия с сервером.
+- React.js: для построения пользовательского интерфейса и управления состоянием приложения.
+- Redux: для управления состоянием приложения и обмена данными между компонентами.
+- Axios: для взаимодействия с сервером и выполнения AJAX-запросов.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Redux Toolkit: инструмент для управления состоянием приложения.
+- React Router DOM: библиотека для маршрутизации внутри приложения React.
+- Material-UI (MUI): библиотека компонентов с готовыми стилями и иконками для быстрого создания интерфейса.
+- react-markdown: компонент для отображения Markdown-разметки.
+- framer-motion: библиотека анимаций для React.
+- react-hook-form: библиотека для управления формами в React с использованием хуков.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Back-end:
 
-## Learn More
+- Node.js: для выполнения JavaScript на серверной стороне. 
+- Express.js: для создания веб-сервера и обработки маршрутов.
+- MongoDB: для хранения данных приложения, таких как пользователи и твиты.
+- Mongoose: для удобной работы с MongoDB и определения моделей данных.
+- JWT: для аутентификации и авторизации пользователей.
+- bcrypt: для хеширования паролей пользователей.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Multer: для загрузки и хранения медиафайлов, таких как аватары пользователей.
+- cors: пакет для обработки CORS (Cross-Origin Resource Sharing) в Express.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
